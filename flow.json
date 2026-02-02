@@ -1,0 +1,112 @@
+[
+    {
+        "id": "677299ac2cab0b37",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "43b6d9470bd63134",
+        "type": "ncd-gateway-node",
+        "z": "677299ac2cab0b37",
+        "name": "",
+        "connection": "",
+        "unknown_devices": 0,
+        "outputs": 1,
+        "x": 570,
+        "y": 140,
+        "wires": [
+            [
+                "4cb23077560dde16"
+            ]
+        ]
+    },
+    {
+        "id": "4cb23077560dde16",
+        "type": "debug",
+        "z": "677299ac2cab0b37",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "2f036309c9edd825",
+        "type": "function",
+        "z": "677299ac2cab0b37",
+        "name": "Command to disable Stay on mode",
+        "func": "msg.payload = {\n    \"address\": msg.payload.mac,\n    /* Disable Stay on Mode */\n    \"data\": [0xF7, 0x32, 0x00, 0x00, 0x00, 0x00]\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "43b6d9470bd63134",
+                "72869ce649de48cd"
+            ]
+        ]
+    },
+    {
+        "id": "e9432cf1225bb2ba",
+        "type": "inject",
+        "z": "677299ac2cab0b37",
+        "name": "Replace Mac Address",
+        "props": [
+            {
+                "p": "payload.mac",
+                "v": "00:13:A2:00:40:A1:53:E5",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 160,
+        "y": 60,
+        "wires": [
+            [
+                "2f036309c9edd825"
+            ]
+        ]
+    },
+    {
+        "id": "72869ce649de48cd",
+        "type": "debug",
+        "z": "677299ac2cab0b37",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d2ce2e0ffa7e1cbc",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@ncd-io/node-red-enterprise-sensors": "1.7.5"
+        }
+    }
+]
