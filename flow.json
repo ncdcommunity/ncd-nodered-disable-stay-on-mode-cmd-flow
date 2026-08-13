@@ -2,7 +2,7 @@
     {
         "id": "677299ac2cab0b37",
         "type": "tab",
-        "label": "Flow 3",
+        "label": "Disable Stay on ",
         "disabled": false,
         "info": "",
         "env": []
@@ -15,11 +15,12 @@
         "connection": "",
         "unknown_devices": 0,
         "outputs": 1,
-        "x": 570,
-        "y": 140,
+        "x": 230,
+        "y": 300,
         "wires": [
             [
-                "4cb23077560dde16"
+                "4cb23077560dde16",
+                "32831aa3dd57614a"
             ]
         ]
     },
@@ -35,8 +36,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
-        "y": 140,
+        "x": 440,
+        "y": 300,
         "wires": []
     },
     {
@@ -51,37 +52,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 360,
-        "y": 100,
+        "x": 700,
+        "y": 380,
         "wires": [
             [
-                "43b6d9470bd63134",
-                "72869ce649de48cd"
-            ]
-        ]
-    },
-    {
-        "id": "e9432cf1225bb2ba",
-        "type": "inject",
-        "z": "677299ac2cab0b37",
-        "name": "Replace Mac Address",
-        "props": [
-            {
-                "p": "payload.mac",
-                "v": "00:13:A2:00:40:A1:53:E5",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 160,
-        "y": 60,
-        "wires": [
-            [
-                "2f036309c9edd825"
+                "5545f23eb00e7ac8"
             ]
         ]
     },
@@ -89,24 +64,138 @@
         "id": "72869ce649de48cd",
         "type": "debug",
         "z": "677299ac2cab0b37",
-        "name": "debug 6",
+        "name": "command",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 620,
-        "y": 80,
+        "x": 1000,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "d2ce2e0ffa7e1cbc",
+        "id": "09b53c20cd4df9b4",
+        "type": "comment",
+        "z": "677299ac2cab0b37",
+        "name": "Flow to set 'Stay on' mode in sensor type 108 - Machine Uptime Monitoring Sensor \\n \\n Step 1) Double click on the Wireless Gateway node and select the 'dev/ttymxc2' from Serial Device Drop-down.\\n Step 2) Click on the Done and Deploy button.\\n Step 3) Press and release the Reset button on the sensor.\\n Step 4) Wait for FLY messge (configuration mode).\\n Step 5) You will see the command message.\\n Step 6) Once you configured your device, you can disable this flow.",
+        "info": "",
+        "x": 410,
+        "y": 140,
+        "wires": [],
+        "icon": "node-red/cog.svg"
+    },
+    {
+        "id": "32831aa3dd57614a",
+        "type": "switch",
+        "z": "677299ac2cab0b37",
+        "name": "sensor mode",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "sensor_mode",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 230,
+        "y": 380,
+        "wires": [
+            [
+                "f6516855ef4e73a6"
+            ]
+        ]
+    },
+    {
+        "id": "f6516855ef4e73a6",
+        "type": "switch",
+        "z": "677299ac2cab0b37",
+        "name": "FLY",
+        "property": "payload.mode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "FLY",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "8fec2686c2d0c440"
+            ]
+        ]
+    },
+    {
+        "id": "5545f23eb00e7ac8",
+        "type": "delay",
+        "z": "677299ac2cab0b37",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "500",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 875,
+        "y": 380,
+        "wires": [
+            [
+                "43b6d9470bd63134",
+                "72869ce649de48cd"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "8fec2686c2d0c440",
+        "type": "switch",
+        "z": "677299ac2cab0b37",
+        "name": "108",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "108",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 490,
+        "y": 380,
+        "wires": [
+            [
+                "2f036309c9edd825"
+            ]
+        ]
+    },
+    {
+        "id": "dc680785867c4491",
         "type": "global-config",
         "env": [],
         "modules": {
-            "@ncd-io/node-red-enterprise-sensors": "1.7.5"
+            "@ncd-io/node-red-enterprise-sensors": "3.0.5"
         }
     }
 ]
